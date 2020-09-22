@@ -10,7 +10,10 @@
 
   var MP3Recorder = function (config) {
 
-    var recorder = this, startTime = 0, context = new AudioContext();
+    var recorder = this, startTime = 0, context = new AudioContext({
+      sampleRate: config.sampleRate,
+      latencyHint: 'playback'
+    });
     config = config || {};
     var realTimeWorker = new Worker('worker-realtime.js');
 
