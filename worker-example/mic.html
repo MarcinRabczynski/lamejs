@@ -30,12 +30,13 @@
 <script>
     //on document ready
     $(function () {
-        var recorder = new MP3Recorder({
-            bitRate: 128
-        }), timer;
+        var recorder,timer,counter = 1;
 
 
         $('#startBtn').on('click', function (e) {
+            recorder = new MP3Recorder({
+                bitRate: 64
+            });
             e.preventDefault();
             var btn = $(this);
             recorder.start(function () {
@@ -67,13 +68,14 @@
             recorder.getMp3Blob(function (blob) {
                 //var blobUrl = window.URL.createObjectURL(blob);
                 blobToDataURL(blob, function(url){
+                    let file_name = 'recording_' + (counter++) + '_.mp3';
                     $('ol.convertedList')
-                            .append('<li><strong> recording_' +
-                            (new Date()) +
-                            '_.mp3</strong><br/>' +
-                            '<audio controls src="' + url + '"></audio>' +
-                            '</li>');
+                            .append(`<li><strong>${file_name}</strong><br/>
+                            <audio controls src="${url}"></audio>
+                            <a href="${url}" download="${file_name}">download</a>
+                            </li>`);
                 });
+
             }, function (e) {
                 alert('We could not retrieve your message');
                 console.log(e);
