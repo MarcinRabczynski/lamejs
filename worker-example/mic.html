@@ -35,7 +35,8 @@
 
         $('#startBtn').on('click', function (e) {
             recorder = new MP3Recorder({
-                bitRate: 64
+                bitRate: 64,
+                sampleRate: 22050
             });
             e.preventDefault();
             var btn = $(this);
